@@ -3,7 +3,6 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
-import { useColorScheme } from "@/hooks/useColorScheme";
 import { BlurView } from "expo-blur";
 import { Platform, StyleSheet, View } from "react-native";
 import index from "./index";
@@ -14,14 +13,13 @@ import profile from "./profile";
 const Tab = createBottomTabNavigator();
 
 const TabLayout = () => {
-  const colorScheme = useColorScheme();
-  const blurTint = colorScheme === "dark" ? "dark" : "light";
+  const blurTint = "light";
 
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].activeTint,
-        tabBarInactiveTintColor: Colors[colorScheme ?? "light"].inactiveTint,
+        tabBarActiveTintColor: Colors["light"].activeTint,
+        tabBarInactiveTintColor: Colors["light"].inactiveTint,
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: [
@@ -58,14 +56,15 @@ const TabLayout = () => {
         tabBarBackground: () => (
           <BlurView
             tint={blurTint}
-            intensity={100}
+            intensity={90}
             style={{
               ...StyleSheet.absoluteFillObject,
               borderTopLeftRadius: 20,
               borderTopRightRadius: 20,
               overflow: "hidden",
-              backgroundColor: "rgba(255, 255, 255, 0.85)",
+              /* backgroundColor: "rgba(255, 255, 255, 0.85)", */
             }}
+            experimentalBlurMethod="dimezisBlurView"
           />
         ),
         tabBarLabelStyle: {
@@ -94,26 +93,6 @@ const TabLayout = () => {
         }}
       />
       <Tab.Screen
-        name="favourites"
-        component={favourites}
-        options={{
-          title: "Favourites",
-          tabBarIcon: ({ focused }) => (
-            <View
-              style={
-                focused ? styles.iconContainerFocused : styles.iconContainer
-              }
-            >
-              <TabBarIcon
-                name="bookmark"
-                color={focused ? "#FFFFFF" : "#999999"}
-                focused={focused}
-              />
-            </View>
-          ),
-        }}
-      />
-      <Tab.Screen
         name="categories"
         component={categories}
         options={{
@@ -126,6 +105,26 @@ const TabLayout = () => {
             >
               <TabBarIcon
                 name="colorFilter"
+                color={focused ? "#FFFFFF" : "#999999"}
+                focused={focused}
+              />
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="favourites"
+        component={favourites}
+        options={{
+          title: "Favourites",
+          tabBarIcon: ({ focused }) => (
+            <View
+              style={
+                focused ? styles.iconContainerFocused : styles.iconContainer
+              }
+            >
+              <TabBarIcon
+                name="bookmark"
                 color={focused ? "#FFFFFF" : "#999999"}
                 focused={focused}
               />
@@ -169,7 +168,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
     borderRadius: 25,
-    backgroundColor: "#EA6E7F",
+    backgroundColor: "#2ECC71",
   },
   iconContainer: {
     width: 70,

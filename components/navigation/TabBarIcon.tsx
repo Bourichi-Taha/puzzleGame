@@ -11,16 +11,16 @@ const iconUrls = {
     inactive: require("../../assets/images/icons/icons8-home-100.png"),
   },
   bookmark: {
-    active: require("../../assets/images/icons/icons8-favorite-100.png"),
-    inactive: require("../../assets/images/icons/icons8-favorite-100.png"),
+    active: require("../../assets/images/icons/icons8-save-100.png"),
+    inactive: require("../../assets/images/icons/icons8-save-100.png"),
   },
   colorFilter: {
-    active: require("../../assets/images/icons/icons8-themes-100.png"),
-    inactive: require("../../assets/images/icons/icons8-themes-100.png"),
+    active: require("../../assets/images/icons/icons8-map-100.png"),
+    inactive: require("../../assets/images/icons/icons8-map-100.png"),
   },
   person: {
-    active: require("../../assets/images/icons/icons8-account-100.png"),
-    inactive: require("../../assets/images/icons/icons8-account-100.png"),
+    active: require("../../assets/images/icons/icons8-person-100.png"),
+    inactive: require("../../assets/images/icons/icons8-person-100.png"),
   },
 };
 

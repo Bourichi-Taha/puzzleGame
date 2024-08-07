@@ -12,10 +12,9 @@ import {
   Alert,
 } from "react-native";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
-import WallpaperCard from "@/components/WallpaperCard";
+import CharacterCard from "@/components/CharacterCard";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "expo-router";
-import { useColorScheme } from "@/hooks/useColorScheme";
 import { useRoute } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
@@ -25,25 +24,25 @@ import {
 import metaData from "../db.json";
 import { images } from "../utils/index";
 import { useFavorites } from "@/components/favouritesContext";
+/* import {
+  InterstitialAd,
+  TestIds,
+  AdEventType,
+} from "react-native-google-mobile-ads"; */
 
 const HomeScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [favouriteWallpapers, setFavouriteWallpapers] = useState([]);
   const insets = useSafeAreaInsets();
-  const colorScheme = useColorScheme();
   const route = useRoute();
   const { category } = route.params as {
     category: { category: string; images: string[]; icon: string };
   };
-  const color = colorScheme === "dark" ? "dark" : "light";
-  const gradientColors =
-    colorScheme === "dark"
-      ? ["rgba(0,0,0,1)", "rgba(0,0,0,1)", "rgba(0,0,0,0)"]
-      : ["rgba(255,255,255,1)", "rgba(255,255,255,1)", "rgba(255,255,255,0)"];
-  const text =
-    colorScheme === "dark" ? "rgba(255, 255, 255, .35)" : "rgba(0, 0, 0, .35)";
-  const nameText =
-    colorScheme === "dark" ? "rgba(255, 255, 255, 1)" : "rgba(0, 0, 0, 1)";
+  const gradientColors = [
+    "rgba(255,255,255,1)",
+    "rgba(255,255,255,1)",
+    "rgba(255,255,255,0)",
+  ];
 
   const [categoriesData, setCategoriesData] = useState<
     { category: string; icon: string; images: string[] }[]
@@ -132,10 +131,15 @@ const HomeScreen = () => {
     setRefreshing(true);
   }, []);
 
+  /*   const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL, {
+    requestNonPersonalizedAdsOnly: true,
+    keywords: ["fashion", "clothing"],
+  }); */
+
   return (
     <View style={[styles.container]}>
       <SafeAreaView
-        style={[styles.backgroundContainer, { backgroundColor: color }]}
+        style={[styles.backgroundContainer, { backgroundColor: "light" }]}
       >
         <ScrollView
           style={{
@@ -160,7 +164,7 @@ const HomeScreen = () => {
             ]}
           >
             {category.images.map((image, index) => (
-              <WallpaperCard
+              <CharacterCard
                 key={`${category.category}_${index}`}
                 index={index}
                 title={category.category}
@@ -173,7 +177,11 @@ const HomeScreen = () => {
                   category: category.category,
                 })}
                 style={styles.card}
-                onPress={() =>
+                onPress={() => {
+                  /* interstitial.load();
+                  setTimeout(() => {
+                    interstitial.show();
+                  }, 20000); */
                   navigation.navigate("wallpaperDetails", {
                     category: {
                       images: [images[image]],
@@ -182,8 +190,8 @@ const HomeScreen = () => {
                       category: category.category,
                     },
                     selectedImage: images[image],
-                  })
-                }
+                  });
+                }}
                 onPressHeart={() => {
                   if (
                     !isFavorite({
@@ -229,7 +237,26 @@ const HomeScreen = () => {
                 style={styles.cardImage}
                 resizeMode="cover"
               >
-                <Text style={styles.cardTitle}>{category.category}</Text>
+                <View
+                  style={{
+                    flexDirection: "column",
+                    alignContent: "center",
+                    alignItems: "center",
+                    zIndex: 1,
+                    position: "absolute",
+                    backgroundColor: "transparent",
+                    alignSelf: "center",
+                    marginBottom: 10,
+                    height: 250,
+                    width: "100%",
+                    marginVertical: 80,
+                  }}
+                >
+                  <Text style={styles.cardTitle}>{category.category}</Text>
+                  <Text style={styles.cardDescription}>
+                    Fancomic Rayman Nightmarish
+                  </Text>
+                </View>
               </ImageBackground>
             </View>
           </View>
@@ -242,6 +269,7 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "white",
   },
   backgroundContainer: {
     flex: 1,
@@ -323,8 +351,6 @@ const styles = StyleSheet.create({
     height: 230,
     width: "100%",
     overflow: "hidden",
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
     shadowColor: "rgb(47, 64, 85)",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
@@ -334,22 +360,21 @@ const styles = StyleSheet.create({
   cardImage: {
     flex: 1,
     overflow: "hidden",
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
   },
   cardTitle: {
-    width: "50%",
-    color: "rgba(255,255,255,.8)",
-    fontSize: 40,
-    fontFamily: "Rancho",
-    position: "absolute",
-    top: 100,
-    left: 50,
+    color: "rgba(255,255,255,.5)",
+    fontSize: 20,
+    fontFamily: "MuseoBold",
     zIndex: 1,
-    height: 100,
-    alignItems: "center",
-    justifyContent: "center",
-    lineHeight: 45,
+    textAlign: "center",
+  },
+  cardDescription: {
+    fontSize: 18,
+    fontFamily: "MuseoBold",
+    color: "white",
+    paddingHorizontal: 10,
+    zIndex: 1,
+    textAlign: "center",
   },
 });
 

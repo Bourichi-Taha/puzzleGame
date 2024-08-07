@@ -13,25 +13,23 @@ import {
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
 import CategoryCard from "@/components/CategoryCard";
-import { useColorScheme } from "@/hooks/useColorScheme";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "expo-router";
 import { images } from "../../utils/index";
 import metaData from "../../db.json";
 import { useState, useEffect } from "react";
+/* import InlineAd from "@/components/InlineAd"; */
 
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();
-  const colorScheme = useColorScheme();
-  const color = colorScheme === "dark" ? "dark" : "light";
-  const gradientColors =
-    colorScheme === "dark"
-      ? ["rgba(0,0,0,1)", "rgba(0,0,0,1)", "rgba(0,0,0,0)"]
-      : ["rgba(255,255,255,1)", "rgba(255,255,255,1)", "rgba(255,255,255,0)"];
-  const text =
-    colorScheme === "dark" ? "rgba(255, 255, 255, .35)" : "rgba(0, 0, 0, .35)";
-  const nameText =
-    colorScheme === "dark" ? "rgba(255, 255, 255, 1)" : "rgba(0, 0, 0, 1)";
+  const color = "light";
+  const gradientColors = [
+    "rgba(255,255,255,1)",
+    "rgba(255,255,255,1)",
+    "rgba(255,255,255,0)",
+  ];
+  const text = "rgba(0, 0, 0, .35)";
+  const nameText = "rgba(0, 0, 0, 1)";
 
   const [categoriesData, setCategoriesData] = useState<
     { title: string; image: string; wallpapers: string[] }[]
@@ -92,10 +90,13 @@ export default function HomeScreen() {
         locations={[0, 0.7, 1]}
         style={styles.overlayContainer}
       >
+        {/* <InlineAd /> */}
         <View style={styles.containerHeader}>
           <View style={styles.header}>
             <View style={styles.name}>
-              <Text style={[styles.nameText, { color: text }]}>Welcome to</Text>
+              <Text style={[styles.nameText, { color: text }]}>
+                Hi 👋, this is your guide for
+              </Text>
               <Text style={[styles.nameTextAppName, { color: nameText }]}>
                 {metaData.app_name}
               </Text>
@@ -105,7 +106,7 @@ export default function HomeScreen() {
             </View>
           </View>
           <View style={styles.titleContainer}>
-            <Text style={styles.title}>" Themes for every taste "</Text>
+            <Text style={styles.title}>Chapters</Text>
           </View>
         </View>
       </LinearGradient>
@@ -149,10 +150,11 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   icon: {
-    width: 45,
-    height: 45,
+    width: 50,
+    height: 50,
     borderRadius: 60,
     alignSelf: "center",
+    marginBottom: 5,
   },
   nameText: {
     textAlign: "left",
@@ -165,15 +167,13 @@ const styles = StyleSheet.create({
     textAlign: "left",
     paddingVertical: 0,
     fontSize: 21,
-    fontFamily: "Beiruti",
+    fontFamily: "MuseoBold",
   },
   titleContainer: {
     marginLeft: 0,
-    alignItems: "center",
     marginTop: 40,
     marginBottom: 15,
     backgroundColor: "transparent",
-    flexShrink: 1,
   },
   cardContainer: {
     flexDirection: "row",
@@ -188,16 +188,15 @@ const styles = StyleSheet.create({
   },
   containerHeader: {
     backgroundColor: "transparent",
-    paddingTop: 20,
+    paddingTop: 10,
     paddingHorizontal: 20,
   },
   mainContent: {
     paddingTop: 220,
   },
   title: {
-    fontSize: 32,
+    fontSize: 20,
     lineHeight: 32,
-    fontFamily: "Rancho",
-    textAlign: "center",
+    fontFamily: "MuseoBold",
   },
 });

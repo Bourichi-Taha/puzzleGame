@@ -1,22 +1,38 @@
 {
-  "app_name": "My app",
+  "app_name": "Puzzle Game",
   "icon_url": "icon1",
-  "categories": [
+  "levels": [
     {
-      "category": "Standard",
-      "icon": "categoryIcon1",
-      "images": ["wallpaper1", "wallpaper2", "wallpaper3"]
+      "images": ["wallpaper1", "wallpaper2"]
     },
     {
-      "category": "Games",
-      "icon": "categoryIcon2",
-      "images": ["wallpaper4", "wallpaper5", "wallpaper6"]
+      "images": ["wallpaper3", "wallpaper4"]
     },
     {
-      "category": "Animals",
-      "icon": "categoryIcon3",
-      "images": ["wallpaper7", "wallpaper8", "wallpaper9"]
+      "images": ["wallpaper5", "wallpaper6"]
+    },
+    {
+      "images": ["wallpaper7", "wallpaper8"]
+    },
+    {
+      "images": ["wallpaper1", "wallpaper2", "wallpaper3", "wallpaper4"]
+    },
+    {
+      "images": ["wallpaper5", "wallpaper6", "wallpaper7", "wallpaper8"]
+    },
+    {
+      "images": [
+        "wallpaper1",
+        "wallpaper2",
+        "wallpaper3",
+        "wallpaper4",
+        "wallpaper5",
+        "wallpaper6",
+        "wallpaper7",
+        "wallpaper8"
+      ]
     }
   ],
-  "carousel": ["pinned1", "pinned2", "pinned3"]
+  "sliders": ["categoryIcon1", "categoryIcon1", "categoryIcon1"],
+  "loader": "loader"
 }

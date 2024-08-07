@@ -9,34 +9,35 @@ import {
   View,
   Text,
 } from "react-native";
-import WallpaperCard from "@/components/WallpaperCard";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "expo-router";
-import { useColorScheme } from "@/hooks/useColorScheme";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   SafeAreaView,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
 import metaData from "../../db.json";
 import { images } from "../../utils/index";
-import ShimmerPlaceHolder from "react-native-shimmer-placeholder";
 import { BlurView } from "expo-blur";
 import { useFavorites } from "@/components/favouritesContext";
+import SavedCharacterCard from "@/components/SavedArticleCard";
+/* import {
+  InterstitialAd,
+  TestIds,
+  AdEventType,
+} from "react-native-google-mobile-ads";
+import InlineAd from "@/components/InlineAd"; */
 
 const FavouritesScreen = () => {
   const insets = useSafeAreaInsets();
   const [refreshing, setRefreshing] = useState(false);
-  const colorScheme = useColorScheme();
-  const color = colorScheme === "dark" ? "dark" : "light";
-  const gradientColors =
-    colorScheme === "dark"
-      ? ["rgba(0,0,0,1)", "rgba(0,0,0,1)", "rgba(0,0,0,0)"]
-      : ["rgba(255,255,255,1)", "rgba(255,255,255,1)", "rgba(255,255,255,0)"];
-  const text =
-    colorScheme === "dark" ? "rgba(255, 255, 255, .35)" : "rgba(0, 0, 0, .35)";
-  const nameText =
-    colorScheme === "dark" ? "rgba(255, 255, 255, 1)" : "rgba(0, 0, 0, 1)";
+  const color = "light";
+  const gradientColors = [
+    "rgba(255,255,255,1)",
+    "rgba(255,255,255,1)",
+    "rgba(255,255,255,0)",
+  ];
+  const text = "rgba(0, 0, 0, .35)";
+  const nameText = "rgba(0, 0, 0, 1)";
   const navigation = useNavigation();
   const { favorites, addToFavorites, removeFromFavorites, isFavorite } =
     useFavorites();
@@ -45,6 +46,11 @@ const FavouritesScreen = () => {
     setRefreshing(true);
     setRefreshing(false);
   }, []);
+  /* 
+  const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL, {
+    requestNonPersonalizedAdsOnly: true,
+    keywords: ["fashion", "clothing"],
+  }); */
 
   return (
     <View style={styles.container}>
@@ -142,7 +148,7 @@ const FavouritesScreen = () => {
               ]}
             >
               {favorites.map((category, index) => (
-                <WallpaperCard
+                <SavedCharacterCard
                   key={`${category.category}_${index}`}
                   index={index}
                   title={category.category}
@@ -151,10 +157,18 @@ const FavouritesScreen = () => {
                   isFavorite={isFavorite(category)}
                   style={styles.card}
                   onPress={() => {
+                    /* interstitial.load();
+                    setTimeout(() => {
+                      interstitial.show();
+                    }, 20000); */
                     navigation.navigate("wallpaperDetails", {
-                      category,
-                      selectedImage: images[category.image],
-                      key: category.image,
+                      category: {
+                        images: [images[image]],
+                        image: image,
+                        id: index,
+                        category: category.category,
+                      },
+                      selectedImage: images[image],
                     });
                   }}
                   onPressHeart={() => {
@@ -175,10 +189,13 @@ const FavouritesScreen = () => {
         locations={[0, 0.7, 1]}
         style={styles.overlayContainer}
       >
+        {/*  <InlineAd /> */}
         <View style={styles.containerHeader}>
           <View style={styles.header}>
             <View style={styles.name}>
-              <Text style={[styles.nameText, { color: text }]}>Welcome to</Text>
+              <Text style={[styles.nameText, { color: text }]}>
+                Hi 👋, this is your guide for
+              </Text>
               <Text style={[styles.nameTextAppName, { color: nameText }]}>
                 {metaData.app_name}
               </Text>
@@ -187,17 +204,9 @@ const FavouritesScreen = () => {
               <Image source={images[metaData.icon_url]} style={styles.icon} />
             </View>
           </View>
-          {favorites.length === 0 ? (
-            <View style={styles.titleContainer}>
-              <Text style={styles.title}> </Text>
-            </View>
-          ) : (
-            <View style={styles.titleContainer}>
-              <Text style={styles.title}>
-                " Your top picks, always at hand. "
-              </Text>
-            </View>
-          )}
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>Saved articles</Text>
+          </View>
         </View>
       </LinearGradient>
     </View>
@@ -265,10 +274,11 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   icon: {
-    width: 45,
-    height: 45,
+    width: 50,
+    height: 50,
     borderRadius: 60,
     alignSelf: "center",
+    marginBottom: 5,
   },
   nameText: {
     textAlign: "left",
@@ -281,11 +291,10 @@ const styles = StyleSheet.create({
     textAlign: "left",
     paddingVertical: 0,
     fontSize: 21,
-    fontFamily: "Beiruti",
+    fontFamily: "MuseoBold",
   },
   titleContainer: {
     marginLeft: 0,
-    alignItems: "center",
     marginTop: 40,
     marginBottom: 15,
     backgroundColor: "transparent",
@@ -309,7 +318,7 @@ const styles = StyleSheet.create({
   },
   containerHeader: {
     backgroundColor: "transparent",
-    paddingTop: 20,
+    paddingTop: 10,
     paddingHorizontal: 20,
   },
   mainContent: {
@@ -337,10 +346,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   title: {
-    fontSize: 32,
+    fontSize: 20,
     lineHeight: 32,
-    fontFamily: "Rancho",
-    textAlign: "center",
+    fontFamily: "MuseoBold",
   },
 });
 

@@ -6,11 +6,12 @@ import {
   Platform,
   Dimensions,
   View,
+  Text,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFavorites } from "./favouritesContext";
 
-interface WallpaperCardProps {
+interface SavedCharacterCardProps {
   index: number;
   title: string;
   images: string[];
@@ -24,7 +25,7 @@ interface WallpaperCardProps {
 const { width } = Dimensions.get("window");
 const cardWidth = (width - 45) / 2;
 
-const WallpaperCard: React.FC<WallpaperCardProps> = ({
+const SavedCharacterCard: React.FC<SavedCharacterCardProps> = ({
   index,
   title,
   images,
@@ -83,61 +84,78 @@ const WallpaperCard: React.FC<WallpaperCardProps> = ({
   const { favorites, addToFavorites, removeFromFavorites } = useFavorites();
 
   return (
-    <View style={[styles.card, shadowStyle]}>
+    <View style={[styles.card]}>
       <TouchableOpacity style={[styles.card, shadowStyle]} onPress={onPress}>
         <Image source={currentImage} style={styles.cardImage} />
+        <Text style={styles.cardTitle}>Fancomic Rayman Nightmarish</Text>
+        <TouchableOpacity
+          style={[styles.likeButton]}
+          onPress={() => onPressHeart()}
+        >
+          <Image
+            source={require("../assets/images/icons/icons8-saved-100.png")}
+            style={styles.likeButtonImage}
+          />
+        </TouchableOpacity>
       </TouchableOpacity>
-      {!isFavorite ? (
-        <TouchableOpacity
-          style={[styles.likeButton]}
-          onPress={() => onPressHeart()}
-        >
-          <Image
-            source={require("../assets/images/icons/icons8-favorite-100.png")}
-            style={styles.likeButtonImage}
-          />
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity
-          style={[styles.likeButton]}
-          onPress={() => onPressHeart()}
-        >
-          <Image
-            source={require("../assets/images/icons/icons8-dislike-100.png")}
-            style={styles.likeButtonImage}
-          />
-        </TouchableOpacity>
-      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 20,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
     backgroundColor: "#ffffff",
     width: cardWidth,
-    height: 250,
+    height: 220,
     overflow: "hidden",
+    flexDirection: "column",
+    marginBottom: 5,
   },
   cardImage: {
     borderRadius: 20,
-    width: "100%",
-    height: 250,
+    width: 180,
+    height: 180,
+    shadowColor: "#000000",
+    shadowOpacity: 0.11,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 7,
+    elevation: 2,
   },
   likeButton: {
     position: "absolute",
-    top: 10,
-    right: 10,
-    width: 35,
-    height: 35,
-    tintColor: "white",
+    top: 3,
+    right: 3,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    alignItems: "center",
+    justifyContent: "center",
   },
   likeButtonImage: {
-    width: 35,
-    height: 35,
-    tintColor: "white",
+    width: 24,
+    height: 24,
+    tintColor: "#2ECC71",
+    alignSelf: "center",
+  },
+  cardTitle: {
+    color: "grey",
+    fontSize: 11,
+    left: 5,
+    top: 5,
+    fontFamily: "MuseoBold",
+    marginRight: 7,
+  },
+  cardText: {
+    color: "grey",
+    fontSize: 9,
+    top: 7,
+    left: 5,
+    marginRight: 150,
+    fontFamily: "MuseoBold",
   },
 });
 
-export default WallpaperCard;
+export default SavedCharacterCard;
