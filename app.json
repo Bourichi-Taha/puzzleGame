@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "WeaverTheme",
-    "slug": "WeaverTheme",
+    "name": "weaver",
+    "slug": "weaver",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "WeaverTheme",
+    "scheme": "weaver",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -14,7 +14,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.AIWolves.WeaverTheme",
+      "bundleIdentifier": "com.AIWolves.weaver",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Enable Camera Roll Access so that you can select Other Videos from Camera Roll",
         "CFBundleURLTypes": [
@@ -31,7 +31,7 @@
         "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.AIWolves.WeaverTheme",
+      "package": "com.AIWolves.weaver",
       "permissions": ["READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"]
     },
     "web": {
